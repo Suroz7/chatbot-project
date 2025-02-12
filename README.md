@@ -1,6 +1,9 @@
 # AI Chat Generation Project
 
-A modern, responsive chat interface that leverages the DeepSeek-R1 model for AI-powered conversations.
+A modern, responsive chat interface that leverages the DeepSeek-R1 model for AI-powered conversations
+## Live Demo
+
+🚀 Try it out: [AI Chat Demo](https://generativeai-chatbox.web.app/)
 
 ## Features
 
