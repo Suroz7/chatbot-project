@@ -33,6 +33,23 @@ npm install
 yarn install
 ```
 
+### Environment Setup
+
+1. Get your HuggingFace API key:
+   
+   - Create a new API token
+
+2. Create a `.env` file in the root directory:
+```bash
+REACT_APP_HUGGINGFACE_API_KEY=your_api_key_here
+```
+
+⚠️ Important:
+- Keep your API key secret and secure
+- See [HuggingFace API documentation](https://huggingface.co/docs/api-inference/quicktour) for more details
+
+### Running the Application
+
 3. Start the development server:
 ```bash
 npm start

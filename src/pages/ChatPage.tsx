@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
 import { getChatResponse } from "../ai/huggingface";
 import "../assets/chatpage.css";
+import logo from "../assets/asd2.png";  
+
+interface Message {
+    text: string;
+    sender: 'user' | 'ai';
+}
 
 const ChatPage = () => {
     const [input, setInput] = useState("");
-    const [response, setResponse] = useState("");
+    const [messages, setMessages] = useState<Message[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -16,14 +22,27 @@ const ChatPage = () => {
 
     const handleGenerate = async () => {
         if (!input) return;
+        
+        // Add user message
+        const userMessage: Message = { text: input, sender: 'user' };
+        setMessages(prev => [...prev, userMessage]);
+        
+        // Get AI response
         const result = await getChatResponse(input);
-        setResponse(result || "");
+        
+        // Add AI message
+        const aiMessage: Message = { text: result || "Sorry, I couldn't process that.", sender: 'ai' };
+        setMessages(prev => [...prev, aiMessage]);
+        
+        // Clear input
+        setInput("");
     };
 
     if (loading) {
         return (
             <div className="intro-container">
                 <h1 className="intro-text">Welcome to Chat Generation</h1>
+                <img src={logo} alt="Chat Logo" className="intro-logo" />
             </div>
         );
     }
@@ -35,12 +54,17 @@ const ChatPage = () => {
             </div>
             <div className="chat-box">
                 <div className="chat-content">
-                    {response && (
-                        <div className="chat-response-container">
-                            <small>Model: DeepSeek-R1</small>
-                            <div className="chat-response">{response}</div>
+                    {messages.map((message, index) => (
+                        <div 
+                            key={index} 
+                            className={`message-container ${message.sender}-message`}
+                        >
+                            <div className="message-bubble">
+                                {message.sender === 'ai' && <small>Model: DeepSeek-R1</small>}
+                                <div className="message-text">{message.text}</div>
+                            </div>
                         </div>
-                    )}
+                    ))}
                 </div>
                 <div className="chat-input-container">
                     <input 
